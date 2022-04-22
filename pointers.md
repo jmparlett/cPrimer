@@ -177,7 +177,7 @@ ______________________________________________________________
 
 So we can see that array indexing is effectively the same as incrementing and dereferencing a pointer. Note how the pointer val increases in increments of 4. Exactly the size of the int data type.
 
-`A` is really just a single int pointer. Its address is the start of the array in memory. By incrementing it we can access the 5 integers stored contiguously beginning at location **0x5220d690** ending at location **0x388e56a0**.
+`A` is really just a single int pointer. Its address is the start of the array in memory. By incrementing it we can access the 5 integers stored contiguously beginning at location **0x388e5690** ending at location **0x388e56a0**.
 
 
 
