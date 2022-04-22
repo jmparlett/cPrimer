@@ -11,11 +11,34 @@
 #define ui unsigned int
 
 
+void printBin(ll i){
+  printf("0b"); 
+  for(int j=sizeof(i)*8-1; j >= 0 ; j--){
+    printf("%d", i&(1<<j) ? 1 : 0);
+  }
+  printf("\n");
+}
 
+void sc1(){
 
+  int* i=0;
+  int j=0;
+
+  printf("Value of Int ptr: %d\n",i);
+  printf("Value of Int: %d\n",j);
+
+  i += 2; //increment ptr
+  j += 2*sizeof(int); //increment integer 
+
+  printf("Value of Int ptr: %d\n",i);
+  printf("Value of Int: %d\n",j);
+
+  printf("Value of Int ptr: %d\n",i);
+}
 
 int main(){
 
+  sc1(); 
   unsigned long int p;
 
   printf("sizeof of p: %lu bytes\n", sizeof(p));
