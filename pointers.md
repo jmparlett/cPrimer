@@ -2,7 +2,7 @@
 
 ## Memory as sections of a tape
 
-We can imagine computer memory as a long string of sections of tape. Each section has 
+We can imagine computer memory as a long string of sections of tape. Each section has
 a label 0,1,..,n. Each section may also
 contain some data such as the word "hello"
 or the number 5.
@@ -50,9 +50,7 @@ Output
 ## Pointer Semantics
 What is special about a pointer in C is the semantics that the C language attaches to it. This is related to the type system.
 
-Each type in C has a set size in bytes, which we can look at and print using the `sizeof(type)` function. This function given a type returns
-the size of said type in bytes as a `long unsigned int = size_t`. Its important to note these sizes may vary from physical system to physical system,
-but these are the most common values.
+Each type in C has a set size in bytes, which we can look at and print using the `sizeof(type)` function. This function given a type returns the size of said type in bytes as a `long unsigned int = size_t`. Its important to note these sizes may vary from physical system to physical system, but these are the most common values.
 ```c
 printf("Size of integer = %lu\n", sizeof(int));                             //prints 4 (4 bytes = 32 bits)
 printf("Size of long integer = %lu\n", sizeof(long int));                   //prints 8
@@ -60,7 +58,7 @@ printf("Size of unsigned long integer = %lu\n", sizeof(unsigned long int)); //pr
 printf("Size of size_t = %lu\n", sizeof(size_t));                           //prints 8
 printf("Size of char = %lu\n", sizeof(char));                               //prints 1
 ```
-Since a ptr (any pointer, of any type) is just a 64 bit integer the size of a ptr is 8 bytes no matter the type it points to. Remember it just specifies a memory location.
+Since a pointer (any pointer, of any type) is just a 64 bit integer the size of a pointer is 8 bytes no matter the type it points to. Remember it just specifies a memory location.
 ```c
 //these will all print 8
 printf("Size of int* = %lu\n", sizeof(int*));
@@ -70,13 +68,13 @@ printf("Size of char** = %lu\n", sizeof(char**)); //what structure is described 
 
 You can effectively think of a pointer of a given `type` as the start of a sequence of `sizeof(type)` bytes. By inspecting these bytes we can get a value of `type`.
 
-For example if we have an `int*` and we look at the 4 bytes starting at the address (label) specified by our ptr then we will say those 4 bytes represent the value of an integer.
+For example if we have an `int*` and we look at the 4 bytes starting at the address (label) specified by our pointer then we will say those 4 bytes represent the value of an integer.
 
 
 ## Operations on Pointers
 
 ### Dereference (*)
-When we dereference a pointer we are now referencing the value stored at that location or label or address. When referencing that value we can do anything that we could do with a variable of that type.
+When we "dereference" a pointer with the (*) operator we are now referencing the value stored at that location/address. When referencing that value we can do anything that we could do with a variable of that type.
 
 ```c
 int* i = 0xff00; //so from 0xff00 to 0xff04 we have an integer
@@ -99,7 +97,7 @@ printf("Value of Int ptr: 0x%x\n",i);
 printf("Value of Int: 0x%x\n",j);
 
 i += 2; //increment ptr
-j += 2*sizeof(int); //increment integer 
+j += 2*sizeof(int); //increment integer
 
 printf("Value of Int ptr: 0x%x\n",i);
 printf("Value of Int: 0x%x\n",j);
@@ -139,18 +137,12 @@ Output
 5
 ```
 
-Its interesting to think about what getting the address of pointer means. Consider the above code and the pointer `j`.
+Its interesting to think about what getting the address of a pointer means. Consider the above code and the pointer `j`.
 What is `&j`. Well ultimately `j` is just a number. It is also stored somewhere in memory. So address of `j` is exactly that. It is the location where the value of the pointer itself (not the value at the location specified by the pointer) is kept.
 
 
 ## Arrays
-
-You have probably heard someone say that arrays are pointers in C. Lets explore this fact.
-
-From what we've shown previously you may be able to see how everything you do with an array you can do with a pointer and
-the operations defined above.
-
-For an example consider an array of integers
+From what we've shown previously you may be able to see how everything you do with an array you can do with a pointer and the operations defined above. For an example consider an array of integers
 ```c
 int A[5] = {6,7,8,9,10};
 
@@ -178,7 +170,3 @@ ______________________________________________________________
 So we can see that array indexing is effectively the same as incrementing and dereferencing a pointer. Note how the pointer val increases in increments of 4. Exactly the size of the int data type.
 
 `A` is really just a single int pointer. Its address is the start of the array in memory. By incrementing it we can access the 5 integers stored contiguously beginning at location **0x388e5690** ending at location **0x388e56a0**.
-
-
-
-

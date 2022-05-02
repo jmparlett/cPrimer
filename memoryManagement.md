@@ -1,8 +1,8 @@
 # Memory Management
 
-One of the most intimidating aspects of C is that you have full control over memory. This gives you lots of room for mistakes in your code. Some of the most devastating bugs in the history of the technology industry have been memory management bugs. It does however offer the chance of a clearer picture of your program.
+One of the most intimidating aspects of C is the fact that you have full control over memory. This gives you lots of room for mistakes in your code, but it can also offer a clearer picture of what your program is doing, as well as, more granular control.
 
-Memory is long piece of tape divided into sections. A pointer holds the label (address) of one of these sections. Memory is further separated into larger segments by the operating system. Different programs have access to different segments. If a program tries to access a location outside of its segment the operating system will send it a segmentation fault signal and it will terminate the program. 
+Memory is divided into sections. A pointer holds the label (address) of one of these sections. Memory is further separated into larger segments by the operating system. Different programs have access to different segments. If a program tries to access a location outside of its segment the operating system will send it a segmentation fault signal and it will terminate the program.
 
 
 Consider the following code where we try to dereference a null pointer.
@@ -22,7 +22,7 @@ at the data located at memory address 0. 0 is in fact the address of the very fi
 
 # Malloc
 
-We need our pointers to hold addresses of memory that actually have access to instead of assigning them random address. To do this well need to request an address from our operating system. This is what the C function `malloc` does. Consider its definition below and recall that `size_t` is really just an `unsigned long long`. Just another integer type.
+We need our pointers to hold addresses of memory that we actually have access to instead of assigning them random address. To do this well need to request an address from our operating system. This is what the C function `malloc` does. Consider its definition below and recall that `size_t` is really just an `unsigned long long`. Just another integer type.
 
 ```c
  void *malloc(size_t size);
@@ -31,7 +31,7 @@ This is a very simple function. Given an integer argument *n* it will return a p
 
 Recall that every type has a size. Then obviously if we don't request enough memory to store a given type thats kind of useless right?
 ```c
-int* i = malloc(1); 
+int* i = malloc(1);
 ```
 This is perfectly legal code, but it would be unwise to actually use `i` in this case. Imagine if you do not own the 3 bytes in front
 of `i` and something else requests that memory. You could easily step on your own variable. This is just one example of why behavior here is "undefined". Just make sure you always allocate enough space for the type your working with.
@@ -43,7 +43,7 @@ int* i = malloc(sizeof(int));
 int* j = malloc(sizeof(j)); //this makes it more type agnostic and some people prefer this
 ```
 
-So `i` and `j` both have the required 4 bytes to play with, and we can do whatever we would to do with 2 numbers.
+So `i` and `j` both have the required 4 bytes to play with, and we can do whatever we would like to do with 2 numbers.
 
 ## Creating Arrays
 
@@ -66,17 +66,17 @@ printf("\n");
 ```
 Output
 ```
-0 2 4 6 8 
+0 2 4 6 8
 ```
 
 # Free
 
-Any memory you request with malloc remains in use until and cannot be reused until your program terminates. Unless you "free" that memory. Then it can be reused.
+Any memory you request with malloc remains in use until your program terminates. Unless you "free" that memory. Then it can be reused.
 
 ```c
 void free(void *ptr);
 ```
-`free` says it takes a void pointer, but in C casts to void are implicit, just how casting between number types when doing math is implicit in any language. 
+`free` says it takes a void pointer, but in C casts to void are implicit, just how casting between number types when doing math is implicit in any language.
 
 Consider this python code
 ```python
