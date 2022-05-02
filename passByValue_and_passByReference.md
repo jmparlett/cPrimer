@@ -1,6 +1,5 @@
 # Pass by Value vs Pass by Reference
-
-This is something you've probably heard of in every language. This is the classical example of pass by value semantics written in C.
+If you have used Java then you will probably have heard of this before. It is an idea that is related to the scope of a function. This is the classical example of pass by value semantics written in C.
 
 ## Pass by Value
 ```c
@@ -59,8 +58,8 @@ that takes an array of ints and squares everything in the list.
 void squareArr(int* arr, int n){//takes array and its size
 
   while(n--){//recall anything nonzero is true
-    //value at ptr times equals value at pointer
-    *arr *= *arr; 
+    //value at pointer times equals value at pointer
+    *arr *= *arr;
     //increment pointer by 1
     arr++;
   }
@@ -89,10 +88,13 @@ void main(){
 Output
 ```
 Val of pointer (arr) before function call: 0x9aa28580
-array before function call: 1 2 4 6 7 
+array before function call: 1 2 4 6 7
 Val of pointer (arr) in function after loop: 0x9aa28594
 Val of pointer (arr) after function call: 0x9aa28580
-array after function call: 1 4 16 36 49 
+array after function call: 1 4 16 36 49
 ```
 
 You can see that everything in our array was squared as intended, and I hope you will also notice that the pointers value had changed by the end of the function, but that change was not reflected in the scope of main. This shows that there really are not different argument semantics in C. When you are passing a pointer, you are still just passing an integer. That integer value is copied into a variable in the local scope, and modifying it does not effect anything in an outside scope. So really pass by reference is kind of fake news. Everything is pass by value, but changing the contents of memory (by dereferencing pointers) is absolute.
+
+## Returning Multiple Values vs Passing Pointers
+
