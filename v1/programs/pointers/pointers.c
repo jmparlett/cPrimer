@@ -52,4 +52,13 @@ void snip2(){
 int main(){
 
 
+  int* i = 0;
+
+  int j = 0;
+
+  i++;
+  j++;
+
+  printf("i: %d\n", i);
+  printf("j: %d\n", j);
 }

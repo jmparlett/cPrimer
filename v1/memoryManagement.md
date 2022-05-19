@@ -88,3 +88,8 @@ a + b = 1.5 # so b would be cast to a float before the sum is computed
 
 If you fail to free something before your program terminates then it is called a memory leak. To see why this is bad just consider a
 program that regularly allocates memory to complete a process, but never lets go of that memory after it is done with it. The program will continuously accumulate memory until it either consumes all memory on the system (resulting in a crash) or is terminated by the operating system.
+
+
+# Dynamic Arrays
+Why would we want to use dynamic memory allocation? Memory allocated by the operating system is limited. If you declare the array `int arr[4]` can you ever change it later to an array of 5 things? No. Lets look at structure using what we have learned so far that can do what a static array cant.
+
