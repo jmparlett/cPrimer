@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+c1}{//pointer holds index 2}
+\PYG{k+kt}{int}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{i}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{;}
+\PYG{c+c1}{//dereferencing (*), and printing value at row 2 \PYGZlt{}\PYGZhy{}\PYGZgt{} 8}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}value at i: \PYGZpc{}d}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{i}\PYG{p}{);}
+\end{Verbatim}

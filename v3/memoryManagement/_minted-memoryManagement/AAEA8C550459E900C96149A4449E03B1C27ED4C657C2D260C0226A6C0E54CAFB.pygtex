@@ -1,0 +1,11 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of integer = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{int}\PYG{p}{));}\PYG{+w}{                             }\PYG{c+c1}{//prints 4 (4 bytes = 32 bits)}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of long integer = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{long}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{p}{));}\PYG{+w}{                   }\PYG{c+c1}{//prints 8}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of unsigned long integer = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{p}{));}\PYG{+w}{ }\PYG{c+c1}{//prints 8}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of size\PYGZus{}t = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{size\PYGZus{}t}\PYG{p}{));}\PYG{+w}{                           }\PYG{c+c1}{//prints 8}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of char = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{char}\PYG{p}{));}\PYG{+w}{                               }\PYG{c+c1}{//prints 1}
+\PYG{c+c1}{//these will all print 8}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of int* = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{int}\PYG{o}{*}\PYG{p}{));}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of char* = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{char}\PYG{o}{*}\PYG{p}{));}
+\PYG{n}{printf}\PYG{p}{(}\PYG{l+s}{\PYGZdq{}Size of char** = \PYGZpc{}lu}\PYG{l+s+se}{\PYGZbs{}n}\PYG{l+s}{\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{char}\PYG{o}{**}\PYG{p}{));}\PYG{+w}{ }\PYG{c+c1}{//what structure is described by char** ?}
+\end{Verbatim}

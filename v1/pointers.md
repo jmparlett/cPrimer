@@ -2,26 +2,22 @@
 
 ## Memory as sections of a tape
 
-We can imagine computer memory as a long string of sections of tape. Each section has
-a label 0,1,..,n. Each section may also
-contain some data such as the word "hello"
-or the number 5.
+We can imagine computer memory as a long string of sections of tape. Each section has a label 0,1,..,n. Each section may also contain some data such as the number 5.
 
 |Label (Address)| Data|
 |--|--|
 |0|5|
 |1|66|
-|2|"hello"|
-|3|"world"|
+|2|8|
+|3|9|
 |.|...|
 |.|...|
 |.|...|
-|n|8|
+|n|2|
 
 If we wanted to ask what was at location 2 we could go check memory and see that it is the world hello.
 
-The idea of a pointer is simply a variable that
-holds one of these labels or addresses of a given location in our table.
+The idea of a pointer is simply a variable that holds one of these labels or addresses of a given location in our table.
 
 ## Pointers in C
 
@@ -137,8 +133,7 @@ Output
 5
 ```
 
-Its interesting to think about what getting the address of a pointer means. Consider the above code and the pointer `j`.
-What is `&j`. Well ultimately `j` is just a number. It is also stored somewhere in memory. So address of `j` is exactly that. It is the location where the value of the pointer itself (not the value at the location specified by the pointer) is kept.
+Its interesting to think about what getting the address of a pointer means. Consider the above code and the pointer `j`. eWhat is `&j`. Well ultimately `j` is just a number. It is also stored somewhere in memory. So address of `j` is exactly that. It is the location where the value of the pointer itself (not the value at the location specified by the pointer) is kept.
 
 
 ## Arrays

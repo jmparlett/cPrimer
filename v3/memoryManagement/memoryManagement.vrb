@@ -1,0 +1,14 @@
+\frametitle{The type system}
+Lets look at the size of some types. Please be aware that sizes may be different on different hardware platforms, so these may not be same on your system.
+
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+printf("Size of integer = %lu\n", sizeof(int));                             //prints 4 (4 bytes = 32 bits)
+printf("Size of long integer = %lu\n", sizeof(long int));                   //prints 8
+printf("Size of unsigned long integer = %lu\n", sizeof(unsigned long int)); //prints 8
+printf("Size of size_t = %lu\n", sizeof(size_t));                           //prints 8
+printf("Size of char = %lu\n", sizeof(char));                               //prints 1
+//these will all print 8
+printf("Size of int* = %lu\n", sizeof(int*));
+printf("Size of char* = %lu\n", sizeof(char*));
+\end{minted}
+Observe that an integer is 4 bytes, also that all pointers are the same size. Again pointers are just numbers, specifically in C they are unsigned 64 bit integers. Thus all pointers regardless of type have the same size of 8 bytes.
