@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{int}\PYG{+w}{ }\PYG{o}{*}\PYG{n}{B}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{malloc}\PYG{p}{(}\PYG{k}{sizeof}\PYG{p}{(}\PYG{k+kt}{int}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{l+m+mi}{5}\PYG{p}{);}\PYG{+w}{ }\PYG{c+c1}{//pointer to 5 ints}
+\PYG{n}{free}\PYG{p}{(}\PYG{n}{B}\PYG{p}{);}\PYG{+w}{ }\PYG{c+c1}{//that heap memory can be reused}
+\end{Verbatim}

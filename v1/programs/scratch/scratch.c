@@ -13,65 +13,13 @@
 #define ui unsigned int
 
 typedef struct {
-    int *I;         //list of values
-    int size;       //num things in list
-    int capacity;   //max num of things in list
-} list;
-
-list* List(){
-    list* L = malloc(sizeof(list));
-    L->capacity = 0;
-    L->size = 0;
-    L->I = NULL;
-    return L;
-}
-
-void resize(list* L, size_t newCap){
-    L->I = realloc(L->I, sizeof(int) * newCap);
-    // int *newI = malloc(sizeof(int) * newCap);
-
-    // //copy from old I to newI
-    // for(int j = 0; j < L->size; j++){
-    //     newI[j] = L->I[j];
-    // }
-
-    // free(L->I);
-
-    // L->I = newI;
-}
-
-void append(list* L, int data){
-    if( L->size == L->capacity){
-        L->capacity = 2 * (L->capacity + 1);
-        resize(L, L->capacity);
-    }
-    L->I[L->size] = data;
-
-    L->size++;
-}
-
-void printList(list* L){
-    printf("size: %d capacity: %d\n", L->size, L->capacity);
-    printf("items: ");
-    for(int i=0; i < L->size; i++) printf("%d ", L->I[i]);
-    printf("\n");
-}
-
-void delete(list* L){
-    free(L->I);
-    free(L);
-}
+    char* name;
+    int age;
+    int height;
+}person ;
 
 int main(){
-
-    list* L = List();
-
-    printList(L);
-
-    for(int i = 0; i < 100; i++){
-        append(L, 5*i);
-        printList(L);
-    }
-
-    delete(L);
+    person* p = malloc(sizeof(person));
+    (*p).age = 5;
+    printf("%d\n", (*p).age);
 }

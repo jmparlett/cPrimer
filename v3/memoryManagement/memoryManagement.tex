@@ -45,7 +45,7 @@
 % Theme choice:
 \usetheme{AnnArbor}
 % Title page details: 
-\title{Memory in C}
+\title{Memory and Pointers in C}
 \author{Jonathan Parlett}
 \date{\today}
 
@@ -274,5 +274,226 @@ printf("Size of char* = %lu\n", sizeof(char*));
 \end{minted}
 Observe that an integer is 4 bytes, also that all pointers are the same size. Again pointers are just numbers, specifically in C they are unsigned 64 bit integers. Thus all pointers regardless of type have the same size of 8 bytes.
 \end{frame}
+
+\begin{frame}[fragile]{The type system}
+{\bf Output}
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+Size of integer = 4
+Size of long integer = 8
+Size of unsigned long integer = 8
+Size of size_t = 8
+Size of char = 1
+Size of int* = 8
+Size of char* = 8
+\end{minted}
+Observe that an integer is 4 bytes, also that all pointers are the same size. Again pointers are just numbers, specifically in C they are unsigned 64 bit integers. Thus all pointers regardless of type have the same size of 8 bytes.
+\end{frame}
+
+\begin{frame}[fragile]{Adding to a pointer revisited}
+Now lets look more closely at adding to a pointer with a code example.
+
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+int* i=0;
+int j=0;
+
+printf("Value of Int ptr: 0x%x\n",i);
+printf("Value of Int: 0x%x\n",j);
+
+i += 2; //increment ptr
+j += 2*sizeof(int); //increment integer
+
+printf("Value of Int ptr: 0x%x\n",i);
+printf("Value of Int: 0x%x\n",j);
+\end{minted}
+{\bf Output}
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+Value of Int ptr: 0
+Value of Int: 0
+Value of Int ptr: 8
+Value of Int: 8
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Adding to a pointer revisited}
+Now lets be clear about how pointer addition is actually defined. If a pointer $i$ is equivalent to a number $j$ then adding to $i$ is equivalent to adding the same thing to $j$ times the size of the type that $i$ points to.
+
+\begin{enumerate}
+	\item $int* i = j$
+	\item $i + 1 \iff j + 1 * sizeof(int)$
+	\item More generally $i + x \iff j + x * sizeof(int)$
+\end{enumerate}
+This is why the array pointer $A$ increased in increments of 4 since that is the size of the {\bf int} data type. Lets redraw our array to make this more clear.
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Memory From the Heap}
+We want to use pointers for our own structures that we can control. For that we need memory to store those structures, to get said memory we must request it from the operating system. For this we use {\it malloc}.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+malloc( size_t size)
+\end{minted}
+malloc is a simple function. It takes a whole number size to denote the number of bytes you want, and it returns a pointer to said number of bytes on the heap.
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Memory From the Heap}
+Heres how we can allocate space for a single variable.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+int* i = malloc( sizeof(int) );
+\end{minted} 
+It is important to always allocate the appropriate amount of bytes for the type your pointer is pointing to, for this reason using {\it sizeof(type)} is best practice when using malloc.\\
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Allocating Memory From the Heap}
+It should also be noted that malloc when given a pointer such as $i$, does not return the amount of bytes allocated to $i$ it returns the size of the type of $i$ in bytes. In this case since $i$ is a pointer it would return 8.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+int* i = malloc( sizeof(i) ); //i points to 8 bytes
+\end{minted} 
+If you were to dereference $i$ then you would get the size of the type that $i$ points.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+int* i = malloc( sizeof(*i) ); //i points to 4 bytes
+\end{minted} 
+
+Lets clear up these differences with a code example.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+    int *i;
+    printf("sizeof i: %d sizeof *i: %d\n", sizeof(i), sizeof(*i));
+\end{minted} 
+
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Arrays and Structs}
+Arrays are just contiguous memory locations, so to allocate space for an array we just need to request enough space for all the items we would like to store.
+The 2 declarations below are equivalent in that they both gives us arrays that store the same amount of elements.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+int A[5]; //array of 5 ints
+int *B = malloc(sizeof(int) * 5); //pointer to 5 ints
+\end{minted}
+They are not equivalent in that we cannot later change the size of the array $A$, but we can for $B$. Also recall the $A$ is stored on the stack, and $B$ is stored on the heap.
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Arrays and Structs}
+Structures are a data type in C that allow you to store multiple items of different data types together. We can declare a struct like so.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+struct person {
+	char* name;
+	int age;
+	int height;
+};
+\end{minted}
+Here the variables name, age, and height would be called "members" of the person struct. We can declare a struct and access its members like so.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+struct person p;
+p.age = 5;
+printf("%d\n", p.age);
+\end{minted}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Arrays and Structs}
+For reasons we'll discuss later you usually want to use pointers to structs, not structs themselves. It is far more expensive to pass a struct as an argument to function instead of pointer to a struct. It is common to use C's typedef operator when declaring structs to avoid having to type struct every time you reference it. Using this idom our person struct becomes. 
+
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+typedef struct{
+	char* name;
+	int age;
+	int height;
+}person;
+\end{minted}
+We can declare a pointer to a person and allocate space for it the same way we would for any other type.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+person* p = malloc(sizeof(person));
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Arrays and Structs}
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+person* p = malloc(sizeof(person));
+(*p).age = 5;
+printf("%d\n", (*p).age);
+\end{minted}
+To access its members we could dereference and use dot notation, but due to operator precedence we have to use parentheses which makes this rather awkward. We can instead use arrow notation to access the members of a struct pointer.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+p->age = 5;
+printf("%d\n", p->age);
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Allocating Arrays and Structs}
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+typedef struct{
+	char* name;
+	int age;
+	int height;
+}person;
+
+int main(){
+	person* p = malloc(sizeof(person));
+}
+\end{minted}
+Just because we have allocated space for the struct does that mean we have allocated any space for the {\it char* name}? No. We have allocated 8 bytes for the pointer that is {\it name}, but it does not have space on the heap to store any data.
+\end{frame}
+
+\begin{frame}[fragile]{Free}
+In the same the compiler reclaims static memory when variables fall out of scope, etc, we must reclaim memory we allocate from the heap so that it can be reused by out program. We do this with the {\it free} function.
+
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+void free(void *ptr);
+\end{minted}
+
+To free a variable or an array we simply pass {\it free} the pointer.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+int *B = malloc(sizeof(int) * 5); //pointer to 5 ints
+free(B); //that heap memory can be reused
+\end{minted}
+You must free everything you allocate. If you fail to do so it is called a memory leak. If you program continually allocates memory and never reclaims it, it is destined to crash.
+\end{frame}
+
+\begin{frame}[fragile]{Freeing Struct Pointers} 
+When you have pointers to structs that themselves contain pointers the process of reclaiming memory can be a bit complicated. Consider our person struct from before.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+typedef struct{
+	char* name;
+	int age;
+	int height;
+}person;
+
+int main(){
+	person* p = malloc(sizeof(person));
+	p->name = malloc(sizeof(char) * 5);
+}
+\end{minted}
+If we simply $free(p)$, then we have lost the location of the memory allocated to $p->name$. We must free any pointer that a struct has before freeing it.
+\end{frame}
+
+\begin{frame}[fragile]{Freeing Struct Pointers} 
+The appropriate way to free the person struct containing pointers.
+\begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+person* p = malloc(sizeof(person));
+
+p->name = malloc(sizeof(char) * 5);
+
+free(p->name);
+
+free(p);
+\end{minted}
+
+
+\end{frame}
+
+\begin{frame}[fragile]{Summary} 
+In this presentation we covered
+\begin{enumerate}
+	\item Memory structure: the stack and the heap
+	\item Static vs Dynamic memory
+	\item Pointers and pointer Operations
+	\item Requesting and reclaiming Dynamic memory with malloc and free
+\end{enumerate}
+\end{frame}
+
+\begin{frame}[fragile]{Thanks for watching!}
+Hopefully this helps you understand pointers and memory in C, better than you did before. Thanks for watching!
+\end{frame}
+
 
 \end{document}

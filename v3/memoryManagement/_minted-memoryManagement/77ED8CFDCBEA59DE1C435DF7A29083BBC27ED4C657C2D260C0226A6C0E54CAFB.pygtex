@@ -1,0 +1,9 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{Size}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{n}{integer}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{4}
+\PYG{n}{Size}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{integer}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{8}
+\PYG{n}{Size}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{k+kt}{unsigned}\PYG{+w}{ }\PYG{k+kt}{long}\PYG{+w}{ }\PYG{n}{integer}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{8}
+\PYG{n}{Size}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{k+kt}{size\PYGZus{}t}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{8}
+\PYG{n}{Size}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}
+\PYG{n}{Size}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{o}{*}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{8}
+\PYG{n}{Size}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{k+kt}{char}\PYG{o}{*}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{8}
+\end{Verbatim}

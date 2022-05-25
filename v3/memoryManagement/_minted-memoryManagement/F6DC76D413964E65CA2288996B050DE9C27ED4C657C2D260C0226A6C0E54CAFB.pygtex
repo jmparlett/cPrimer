@@ -1,0 +1,6 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{Value}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{n}{Int}\PYG{+w}{ }\PYG{n}{ptr}\PYG{o}{:}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Value}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{n}{Int}\PYG{o}{:}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Value}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{n}{Int}\PYG{+w}{ }\PYG{n}{ptr}\PYG{o}{:}\PYG{+w}{ }\PYG{l+m+mi}{8}
+\PYG{n}{Value}\PYG{+w}{ }\PYG{n}{of}\PYG{+w}{ }\PYG{n}{Int}\PYG{o}{:}\PYG{+w}{ }\PYG{l+m+mi}{8}
+\end{Verbatim}

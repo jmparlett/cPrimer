@@ -1,0 +1,4 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{n}{free}\PYG{p}{(}\PYG{n}{p}\PYG{o}{\PYGZhy{}\PYGZgt{}}\PYG{n}{name}\PYG{p}{);}
+\PYG{n}{free}\PYG{p}{(}\PYG{n}{p}\PYG{p}{);}
+\end{Verbatim}
