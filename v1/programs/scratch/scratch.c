@@ -6,20 +6,21 @@
 #include <unistd.h>
 #include <string.h>
 #include<stdlib.h>
+#include<stdint.h>
 		
 #define ll long long int
 #define ull unsigned long long int
 #define li long int
 #define ui unsigned int
 
-typedef struct {
-    char* name;
-    int age;
-    int height;
-}person ;
-
+int dummy(){
+    int i = 10;
+    return i;
+}
 int main(){
-    person* p = malloc(sizeof(person));
-    (*p).age = 5;
-    printf("%d\n", (*p).age);
+
+    uint64_t x = 24;
+    uint64_t r = 24%(uint64_t)(x+0.5);
+    printf("%lld\n", r);
+    printf("%lld\n", (uint64_t)(x+0.5));
 }

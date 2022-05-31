@@ -1,0 +1,12 @@
+\frametitle{Static Memory}
+\begin{itemize}[<+->]
+		\item Static memory, also called compile time memory is memory that is managed for you, by the compiler.
+		\item It uses the Stack for storing data.
+		\item When you are declaring variables, arrays, and structs, these data items are stored on the Stack.
+		\item The memory is allocated for them by the compiler when they come into scope, and it is deallocated when they fall out of scope.
+		\item These variables would be statically allocated on the stack
+		\begin{minted}[frame=lines]{c}
+int i = 0;
+int arr[10];
+\end{minted}
+	\end{itemize}

@@ -1,0 +1,7 @@
+\frametitle{Pointer Addition (+)}
+\begin{itemize}[<+->]
+		\item The table is almost the same $A$ still equals 1, but what are the implications for addition and dereference.
+		\item When you are dereferencing $A$ you are actually referencing the 4 bytes starting at the address of $A$.
+		\item When you are adding 1 to $A$ you are actually adding 4, so $A$ points to the next integer in the array.
+		\item Lets draw this out in more detail.
+	\end{itemize}
