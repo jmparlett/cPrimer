@@ -1,0 +1,92 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{fancyhdr}
+\usepackage{pgfplots}
+\usepackage{setspace}
+\usepackage{listings}
+\pgfplotsset{compat=1.17} 
+\usepackage{enumerate}
+\usepackage{algorithm}
+\usepackage{algpseudocode}
+% \geometry{a4paper} % or letter or a5paper or ... etc
+% \geometry{landscape} % rotated page geometry
+% \usepackage[margin=2cm]{geometry}
+\usepackage{minted}
+\usepackage[most]{tcolorbox}
+\newtcolorbox{tb}[1][]{%
+  sharp corners,
+  enhanced,
+  colback=white,
+  height=6cm,
+  attach title to upper,
+  #1
+}
+
+%These setting will make the code areas look Pretty
+\lstset{
+	escapechar=~,
+	numbers=left, 
+	%numberstyle=\tiny, 
+	stepnumber=1, 
+	firstnumber=1,
+	%numbersep=5pt,
+	language=C,
+	% stringstyle=\itfamily,
+	%basicstyle=\footnotesize, 
+	showstringspaces=false,
+	frame=single,
+  upquote=true
+}
+
+% created 2022-May-23 %
+% Theme choice:
+% \usetheme{AnnArbor}
+\usetheme{focus}
+% Title page details: 
+\title{Memory and Pointers in C}
+\author{Jonathan Parlett}
+\date{\today}
+
+\begin{document}
+
+% Title page frame
+\begin{frame}
+    \titlepage
+	{\bf Dynamic Array Programming Example}
+\end{frame}
+
+\begin{frame}{What were going to do}
+	\begin{itemize}[<+->]
+		\item Using what we've covered so far we are going to create a dynamic data structure.
+		\item We will create a dynamic array that grows in size automatically as we store elements in it.
+		\item We will use a pointer to store our data. 
+		\item We will adjust the amount of memory allocated to this pointer in our program as the array grows in size.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}{Python Lists}
+	\begin{itemize}[<+->]
+		\item Python lists are an amazing data structure.
+		\item We can store an arbitrary amount of elements and even store elements of different types in the same list.
+		\item Knowing what you know about memory how do you think they store so many elements?
+		\item It would be very inefficient to simply allocate space for a billion items and hope no one goes over the limit.
+		\item Python lists grow in size as items are added to them.
+		\item The underlying data structure is in fact an array.
+		\item The size of this array is what is adjusted as items are added.
+	\end{itemize}
+\end{frame}
+\begin{frame}{Things to keep in mind}
+	\begin{itemize}[<+->]
+		\item Try to relate what we are doing to the concepts we've previously discussed.
+		\item Dynamic vs Static memory. As we write try to notice where in the program we are using dynamic, and static memory.
+		\item Stack and Heap. As we write the program try to think about what information we are storing on the Heap and what we are storing on the stack.
+		\item Memory model. If a structure looks confusing try to use the model we showed previously to visualize how it might be stored.
+		\item Everyone has their own style of writing and thinking. This is just mine. You don't have to do things exactly as I do them.
+		\item Lets get started.
+	\end{itemize}
+\end{frame}
+
+\end{document}

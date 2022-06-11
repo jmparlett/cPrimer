@@ -62,16 +62,22 @@
 		\item Pointers and the operations performed on them.
 		\begin{enumerate}[<+->]
 			\item Address of (\&)
-			\item Dereference (\*)
+			\item Dereference (*)
 		\end{enumerate}
 		\item Arrays and pointer addition
 		\item The type system and the sizes of types
 		\item Pointer Addition (+)
+		\item Memory management
+		\begin{enumerate}[<+->]
+			\item Malloc (How we request memory)
+			\item Free (How we return memory)
+		\end{enumerate}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Memory as a Table}
 \begin{itemize}[<+->]
+	\item Lets start with how we will represent memory visually as table.
 	\item We can think of the memory allocated to a program as a collection of cells that hold data items. Such as the integer $i = 55$, or the character $c =$'a'.
 	\item 
 	\begin{tabular}{|c|}
@@ -100,19 +106,19 @@
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
-		\hline
-		1 &	0\\
-		\hline
-		2 & 55\\
-		\hline
-		3 & 0\\
-		\hline
-		4 & 'a'\\
+		n &	0\\
 		\hline
 		\vdots & \vdots \\
 		\hline
-		n & 13\\
+		4 &	0\\
+		\hline
+		3 & 55\\
+		\hline
+		2 & 0\\
+		\hline
+		1 & 'a'\\
+		\hline
+		0 & 13\\
 		\hline
 	\end{tabular}
 \end{itemize}
@@ -120,7 +126,7 @@
 
 \begin{frame}{Memory as a Table}
 \begin{itemize}[<+->]
-	\item Finally we know the stack starts at the lowest address and the heap starts at the highest.
+	\item Finally the stack starts at the highest address and the heap starts at the lowest.
 	\item 
 	\begin{tabular}{|c|c|}
 		\hline
@@ -128,23 +134,24 @@
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
-		\hline
-		1 &	0\\
-		\hline
-		2 & 55\\
-		\hline
-		3 & 0\\
-		\hline
-		4 & 'a'\\
+		n &	0\\
 		\hline
 		\vdots & \vdots \\
 		\hline
-		n & 13\\
+		4 &	0\\
+		\hline
+		3 & 55\\
+		\hline
+		2 & 0\\
+		\hline
+		1 & 'a'\\
+		\hline
+		0 & 13\\
 		\hline
 		\multicolumn{2}{|c|}{Heap}\\
 		\hline
 	\end{tabular}
+	\item We will take $n=64$ so we can work with a manageable memory space for the rest of the presentation.
 \end{itemize}
 \end{frame}
 
@@ -165,6 +172,7 @@
 
 \begin{frame}[fragile]{Pointers}
 	\begin{itemize}[<+->]
+		\item Moving to pointers lets first explain the basic concept.
 		\item The basic idea of a pointer is something that tells you where something else is.
 		\item Consider Bob. Bob points to McDonalds. 
 		\item In effect if you know where Bob is you can look where he is pointing to find McDonalds. \item Then it would be reasonable to call Bob a pointer to McDonalds.
@@ -173,7 +181,7 @@
 
 \begin{frame}[fragile]{Pointers}
 	Consider our memory table and the variable
-	\mint{c}|int i = 49 //located at address 1|
+	\mint{c}|int i = 49 //located at address 63|
 
 	\begin{tabular}{|c|c|}
 		\hline
@@ -181,13 +189,13 @@
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
+		64 &	0\\
 		\hline
-		1 &	49\\
+		63 &	49\\
 		\hline
 		\vdots & \vdots \\
 		\hline
-		n & 13\\
+		0 & 13\\
 		\hline
 		\multicolumn{2}{|c|}{Heap}\\
 		\hline
@@ -195,15 +203,15 @@
 
 
 	\begin{itemize}[<+->]
-		\item A pointer in C tells us where a variable or data item is located. To locate $i$ we just need its address 1.
+		\item A pointer in C tells us where a variable or data item is located. To locate $i$ we just need its address 63.
 		\item So thats all a pointer is. Just another variable that holds an address (an index to our table).
-		\item Since an address is just a number, a pointer is just a number. A pointer to $i$ would have the value 1.
+		\item Since an address is just a number, a pointer is just a number. A pointer to $i$ would have the value 63.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Pointers}
-	\mint{c}|int i = 49 //located at address 1|
-	\mint{c}|int *j = 1 //pointer to i, located at address 2|
+	\mint{c}|int i = 49 //located at address 63|
+	\mint{c}|int *j = 63 //pointer to i, located at address 62|
 
 	\begin{tabular}{|c|c|}
 		\hline
@@ -211,15 +219,15 @@
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
+		64 &	0\\
 		\hline
-		1 &	49\\
+		63 &	49\\
 		\hline
-		2 &	1\\
+		62 &	63\\
 		\hline
 		\vdots & \vdots \\
 		\hline
-		n & 13\\
+		0 & 13\\
 		\hline
 		\multicolumn{2}{|c|}{Heap}\\
 		\hline
@@ -227,9 +235,10 @@
 
 
 	\begin{itemize}[<+->]
+		\item In this instance $j$ is Bob and $i$ is McDonalds.
 		\item Since pointers are also variables they to are stored somewhere in our table.
 		\item When we declare them they are statically allocated integers so they are stored on the stack.
-		\item $j$ is stored at location 2. It is a pointer to $i$ so its value is the address of $i$ namely 1.
+		\item $j$ is stored at location 62. It is a pointer to $i$ so its value is the address of $i$ namely 63.
 	\end{itemize}
 \end{frame}
 
@@ -237,28 +246,32 @@
 
 \begin{frame}[fragile]{Pointer Operations: Address Of (\&)}
 	\begin{itemize}[<+->]
+	\item Moving to pointer operations lets start with the address of operator (\&).
 	\item The address of operator is applicable to any type in C not just pointers. It returns the memory address of the data item you use it on.
-	\item 	\mint{c}|int i = 49 //located at address 1|
-	\mint{c}|int *j = 1 //pointer to i, located at address 2|
-
+	\item
+	\mint{c}|int i = 49 //located at address 63|
+	\mint{c}|int *j = 63 //pointer to i, located at address 62|
 	\begin{tabular}{|c|c|}
 		\hline
 		\multicolumn{2}{|c|}{Stack}\\
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
+		64 &	0\\
 		\hline
-		1 &	49\\
+		63 &	49\\
 		\hline
-		2 &	1\\
+		62 &	63\\
 		\hline
 		\vdots & \vdots \\
 		\hline
+		0 & 13\\
+		\hline
 	\end{tabular}
+
 	\item Given the table from before
-	\mint{c}|printf("%d\n", &i); //prints 1|
-	\mint{c}|printf("%d\n", &j); //prints 2|
+	\mint{c}|printf("%d\n", &i); //prints 63|
+	\mint{c}|printf("%d\n", &j); //prints 62|
 	\end{itemize}
 \end{frame}
 
@@ -266,29 +279,34 @@
 	Since a pointer is just a memory address we can say (\&) returns a pointer to the item you use it on. This allows us to do things like.
 	\begin{minted}[frame=lines]{c}
 	int i = 49;
-	int *j = &i;
+	int *j = &i; //j = 63 since index of i is 63
 	\end{minted}
+	This is a more practical way to get a pointer to a statically declared variable.
 \end{frame}
 
 \begin{frame}[fragile]{Pointer Operations: Dereference (*)}
 	\begin{itemize}[<+->]
+		\item Continuing with pointer operations lets talk about dereference (*).
 		\item When you dereference a pointer you are accessing the value at the location specified by the pointer.
-		\item \mint{c}|int i = 49 //located at address 1|
-	\mint{c}|int *j = 1 //pointer to i, located at address 2|
+		\item
+		\mint{c}|int i = 49 //located at address 63|
+		\mint{c}|int *j = 63 //pointer to i, located at address 62|
+		\begin{tabular}{|c|c|}
+			\hline
+			\multicolumn{2}{|c|}{Stack}\\
+			\hline
+			Address & Data\\
+			\hline
+			64 &	0\\
+			\hline
+			63 &	49\\
+			\hline
+			62 &	63\\
+			\hline
+			\vdots & \vdots \\
+			\hline
+		\end{tabular}
 
-	\begin{tabular}{|c|c|}
-		\hline
-		Address & Data\\
-		\hline
-		0 &	0\\
-		\hline
-		1 &	49\\
-		\hline
-		2 &	1\\
-		\hline
-		\vdots & \vdots \\
-		\hline
-	\end{tabular}
 		\item Considering the table from before and the pointer $j$ which points to $i$ when we dereference $j$ we can essentially replace $*j$ with $i$.
 
 		\begin{minted}[frame=lines]{c}
@@ -303,7 +321,8 @@ printf("value at j: %d\n", *j); //prints 69
 
 \begin{frame}[fragile]{Arrays are Pointers}
 	\begin{itemize}[<+->]
-	\item Pointer addition is closely related to how arrays function, so we'll explain arrays before we define it.
+	\item Continuing our discussion of pointer operations we would like to discuss pointer addition (+), but there are some other topics we must cover first to fully explain it.
+	\item The functionality of Arrays is closely related to pointer addition so well explore them first.
 	\item Arrays are one of the simplest data structures. They are simply a collection of contiguous memory locations that contain items of the same type.
 	\end{itemize}
 \end{frame}
@@ -319,18 +338,18 @@ printf("value at j: %d\n", *j); //prints 69
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
+		64 &	0\\
 		\hline
-		1 &	4\\
+		63 &	6\\
 		\hline
-		2 &	5\\
+		62 &	5\\
 		\hline
-		3 &	6\\
+		61 &	4\\
 		\hline
 		\vdots & \vdots \\
 		\hline
 	\end{tabular}
-	\item The variable $A$ would be called the {\it base pointer} of the array, and its value is the address of the first element, in this case address 1.
+	\item The variable $A$ would be called the {\it base pointer} of the array, and its value is the address of the first element, in this case address 61.
 	\end{itemize}
 \end{frame}
 
@@ -340,7 +359,7 @@ printf("value at j: %d\n", *j); //prints 69
 		\mint{c}| *A == 4;|
 		\item This is equivalent to array indexing using the zero index.
 		\mint{c}| *A == A[0]; //both equal 4|
-		\item To access more elements we can add to $A$. $A+1$ references the second item at location 2 namely 5. Dereferencing gives us the item at location 2, namely 5.
+		\item To access more elements we can add to $A$. $A+1$ references the second item at location 62 namely 5. Dereferencing gives us the item at location 62, namely 5.
 		\mint{c}| *(A+1) == A[1]; //both equal 5|
 		\item So array indexing is really just shorthand for pointer addition + dereference.
 		\mint{c}| *(A+i) == A[i];|
@@ -436,8 +455,8 @@ Now lets be clear about how pointer addition is actually defined. If a pointer $
 \begin{itemize}[<+->]
 	\item $int \; j = x, \; x \in \mathbb{N}$
 	\item $int* i = j$
-	\item $i + 1 \iff j + 1 * sizeof(int)$
-	\item More generally $i + x \iff j + x * sizeof(int)$
+	\item $i + 1 \iff j + 1 \cdot sizeof(int)$
+	\item More generally $i + x \iff j + x \cdot sizeof(int)$
 	\item This is why the array pointer $A$ increased in increments of 4 since the size of the {\bf int} data type is 4.
 \end{itemize}
 \end{frame}
@@ -446,19 +465,20 @@ Now lets be clear about how pointer addition is actually defined. If a pointer $
 \begin{frame}[fragile]{Pointer Addition (+)}
 Now that we are no longer ignoring the sizes of types lets take our original table representing the array [3,4,6] and redraw it accurately.
 	\begin{itemize}[<+->]
-	\item \begin{tabular}{|c|c|}
+	\item
+	\begin{tabular}{|c|c|}
 		\hline
 		\multicolumn{2}{|c|}{Stack}\\
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
+		64 &	0\\
 		\hline
-		1 &	4\\
+		63 &	6\\
 		\hline
-		2 &	5\\
+		62 &	5\\
 		\hline
-		3 &	6\\
+		61 &	4\\
 		\hline
 		\vdots & \vdots \\
 		\hline
@@ -475,22 +495,22 @@ Now that we are no longer ignoring the sizes of types lets take our original tab
 		\hline
 		Address & Data\\
 		\hline
-		0 &	0\\
+		64 &	0\\
 		\hline
-		1 &	\multirow{4}{*}{4}\\
-		2\\
-		3\\
-		4\\
+		63 &	\multirow{4}{*}{6}\\
+		62\\
+		61\\
+		60\\
 		\hline
-		5 &	\multirow{4}*{5}\\
-		6\\
-		7\\
-		8\\
+		59 &	\multirow{4}*{5}\\
+		58\\
+		57\\
+		56\\
 		\hline
-		9 &\multirow{4}*{6}\\
-		10\\
-		11\\
-		12\\
+		55 &\multirow{4}*{4}\\
+		54\\
+		53\\
+		52\\
 		\hline
 		\vdots & \vdots \\
 		\hline
@@ -506,10 +526,160 @@ Now that we are no longer ignoring the sizes of types lets take our original tab
 	\end{itemize}
 \end{frame}
 
-\begin{frame}{Thanks for watching}
-	Hopefully you have gained a solid understanding of pointers and their operations. Thanks for watching!
+\begin{frame}[fragile]{Memory Managment} 
+Now were going to discuss how we manage memory.
+\begin{itemize}[<+->]
+	\item We request it from the operating system (allocate it) using
+	\mint{c}|void *malloc(size_t size)|
+	\item We specify that memory is no longer needed (deallocate) it using
+	\mint{c}|void free(void *ptr)|
+\end{itemize}
 \end{frame}
 
+\begin{frame}[fragile]{Malloc} 
+\begin{itemize}[<+->]
+	\item Beginning with {\it malloc()} lets review its summary from the linux manual pages.
+	\item {\it The malloc() function allocates size bytes and returns a pointer to the  allocated memory.} -linux manual pages
+	\item Relating it back to our memory table the malloc function accepts a number of bytes as an argument and returns a memory address, (index of our table), to memory on the Heap. 
+	\item Consider the table of bytes below, notice we start from the bottom as we now reference the Heap.
+
+	\begin{tabular}{|c|c|}
+		\hline
+		Address & Data\\
+		\hline
+		\vdots & \vdots \\
+		\hline
+		3&	0\\
+		\hline
+		2&	6\\
+		\hline
+		1&	5\\
+		\hline
+		0 &	4\\
+		\hline
+		\multicolumn{2}{|c|}{Heap}\\
+		\hline
+	\end{tabular}
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Malloc} 
+\begin{itemize}[<+->]
+	\item A call to malloc will return a heap address. We can use it to request memory for an int pointer like so.
+	\item \mint{c}|int *i = malloc(sizeof(int));|
+	\item \begin{tabular}{|c|c|}
+		\hline
+		Address & Data\\
+		\hline
+		\vdots & \vdots \\
+		\hline
+		3&	0\\
+		\hline
+		2&	6\\
+		\hline
+		1&	5\\
+		\hline
+		0 &	4\\
+		\hline
+		\multicolumn{2}{|c|}{Heap}\\
+		\hline
+	\end{tabular}
+	\item In this instance malloc may return address 0, so rows 0-3 would be used to store our integer.
+	\item Notice the use of the {\it sizeof(int)} to ensure we request the appropriate amount of storage for the type were pointing to. 
+	\item The size of these types may vary from hardware to hardware so it is important to use sizeof to keep our code as hardware independent as possible.
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Malloc an array} 
+\begin{itemize}[<+->]
+	\item Lets see how we can create our own arrays with malloc using a code example.
+	\item \begin{minted}[frame=lines, fontsize=\footnotesize]{c}
+int *A = malloc(sizeof(int) * 4);
+//store the first 4 multiples of 5
+for(int i = 0; i < 4; i++) A[i] = 5*i;
+// print the elements of A
+for(int i = 0; i < 4; i++) printf("A[%d] = %d\n", i, A[i]);
+	\end{minted}
+	\item Were going to modify our table a bit. Its going to index every fourth byte so we can more compactly represent our array in memory.
+	\item \begin{tabular}{|c|c|}
+		\hline
+		Address & Data\\
+		\hline
+		\vdots & \vdots \\
+		\hline
+		12&	15\\
+		\hline
+		8&	10\\
+		\hline
+		4&	5\\
+		\hline
+		0 &	0\\
+		\hline
+		\multicolumn{2}{|c|}{Heap}\\
+		\hline
+	\end{tabular}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Free} 
+\begin{itemize}[<+->]
+	\item Dynamic memory allows us to allocate memory programmatically. Say we allocate memory for a new game session every time a new user connects to our server.
+	\item But obviously we could have a lot of people connecting to our server, we will eventually run out of memory.
+	\item But eventually some users will stop playing and disconnect from our server. So now we should be able to allow someone else to play. We can do this by reusing the memory allocated for the disconnected player for a new session. We can do this with {\it free}
+	\item \mint{c}|void free(void *ptr);|
+	\item Free is the other half of memory management. Whatever memory you request with malloc you must eventually return with free.
+	\item If you fail to free memory you allocate it is called a memory leak. Memory leaks are sources of some mysterious bugs as they can occur at seemingly random (to the programmer) times.
+	\item Consider the example of the above gamer server. If it never reclaimed memory it would eventually not allow anyone to play.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Free} 
+\begin{itemize}[<+->]
+	\item Lets go over another programming example allocating memory for a struct pointer and using free appropriately.
+
+	\item \begin{minted}[frame=lines, fontsize=\scriptsize]{c}
+typedef struct {
+    float* vals;
+    int length;
+} data;
+
+int main(){
+    //we can use sizeof like we would for any other data type
+    data* D = malloc(sizeof(data));
+
+    //the data is also a pointer so we must allocate memory for it
+    D->vals = malloc(sizeof(float) * 5);
+    D->length = 5; //we have space for 5 data points
+
+    for (int i = 0; i < D->length; i++) {
+        D->vals[i] = 0.25 * (i+1);
+    }
+    for(int i = 0; i < D->length; i++){
+        printf("data point %d: %f\n", i, D->vals[i]);
+    }
+
+    //if we fail to free vals before D, then we have created a memory leak.
+    free(D->vals);
+    free(D);
+}
+\end{minted}
+
+\end{itemize}
+\end{frame}
+\begin{frame}{Thanks for watching}
+	\begin{itemize}[<+->]
+		\item Hopefully you have gained a solid understanding of pointers and the basics of memory management.
+		\item Next we are going put what we've learned into practice by implementing a dynamic data structure in C.
+		\item Thanks for watching!
+	\end{itemize}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Commented Garbage
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \iffalse
 \begin{frame}{Memory as a Table}
 	We can think of memory as a $n$x2 table. The indices of the table are memory addresses (just numbers), and the data at each row is the value stored in that memory location. For now this is a simplified table. We will ignore the relevance of the sizes of data types, and consider each row a single item of type {\it int}.
@@ -898,9 +1068,8 @@ free(p->name);
 
 free(p);
 \end{minted}
-
-
 \end{frame}
+
 
 \begin{frame}[fragile]{Summary} 
 In this presentation we covered

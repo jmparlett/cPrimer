@@ -1,7 +1,32 @@
-\frametitle{Pointer Addition (+)}
+\frametitle{Free}
 \begin{itemize}[<+->]
-		\item The table is almost the same $A$ still equals 1, but what are the implications for addition and dereference.
-		\item When you are dereferencing $A$ you are actually referencing the 4 bytes starting at the address of $A$.
-		\item When you are adding 1 to $A$ you are actually adding 4, so $A$ points to the next integer in the array.
-		\item Lets draw this out in more detail.
-	\end{itemize}
+	\item Lets go over another programming example allocating memory for a struct pointer and using free appropriately.
+
+	\item \begin{minted}[frame=lines, fontsize=\scriptsize]{c}
+typedef struct {
+    float* vals;
+    int length;
+} data;
+
+int main(){
+    //we can use sizeof like we would for any other data type
+    data* D = malloc(sizeof(data));
+
+    //the data is also a pointer so we must allocate memory for it
+    D->vals = malloc(sizeof(float) * 5);
+    D->length = 5; //we have space for 5 data points
+
+    for (int i = 0; i < D->length; i++) {
+        D->vals[i] = 0.25 * (i+1);
+    }
+    for(int i = 0; i < D->length; i++){
+        printf("data point %d: %f\n", i, D->vals[i]);
+    }
+
+    //if we fail to free vals before D, then we have created a memory leak.
+    free(D->vals);
+    free(D);
+}
+\end{minted}
+
+\end{itemize}

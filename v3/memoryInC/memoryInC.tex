@@ -86,9 +86,9 @@
 
 	\item \includegraphics[scale=0.40]{imgs/stackandheap.jpeg}
 
-	\item As data is stored on the Stack it grows down in memory towards the Heap. Increasingly higher valued addresses are used.
+	\item As data is stored on the Stack it grows down in memory towards the Heap.
 
-	\item As data is stored on the Heap it grows up in memory towards the Stack. Increasingly lower valued addresses are used.
+	\item As data is stored on the Heap it grows up in memory towards the Stack.
 
 	\end{itemize}
 \end{frame}
@@ -99,7 +99,7 @@
 
 		\item Malloc is used to request memory from the operating system. Specifically it requests memory from the Heap, not the stack.
 
-		\item \mint{c}|malloc(5)| will return 5 bytes on the heap for example.
+		\item \mint{c}|malloc(5)| will return a pointer to 5 bytes on the heap.
 
 		\item We can use the memory given by malloc to store data on the heap.
 	\end{itemize}
@@ -107,10 +107,10 @@
 
 \begin{frame}{Static and Dynamic Memory}
 	\begin{itemize}[<+->]
-		\item All data is stored in memory. This is true for any programming language.
+		\item All programming languages use memory to store data.
 		\item There are a few maintenance tasks that come with using memory.
 		\begin{itemize}[<+->]
-			\item Requesting it from the operation system I.E {\it malloc}.
+			\item Requesting it from the operating system I.E {\it malloc}.
 			\item Freeing it so it can be reused later.
 		\end{itemize}
 		\item These tasks are usually handled for you in higher level languages such as python.
@@ -140,14 +140,15 @@ int arr[10];
 	\begin{itemize}[<+->]
 	\item Dynamic memory is the memory you control. You are responsible for requesting it from the operating system, and saying when it is no longer needed so it can be reused.
 	\item Dynamic memory uses the Heap.
+	\item When you are instantiating pointers and using malloc to request memory for them you are using dynamic memory. Effectively you are using pointers to manage dynamic memory.
 	\item Dynamic memory is powerful because it allows you to utilize memory programmatically.
 	\item You can create data structures that grow and shrink in response to different situations in your program.
-	\item It is what allows C to outperform other higher level languages. Greater control means greater optimization opportunities.
+	\item It is one of the features that allows C to outperform other higher level languages. Greater control means greater optimization opportunities.
 	\end{itemize}
 \end{frame}
 
 \begin{frame}{Static vs Dynamic Memory}
-	\begin{itemize}
+	\begin{itemize}[<+->]
 		\item Static memory is simpler to use over dynamic memory. No need to worry about allocating or deallocating means less programmer overhead.
 		\item Static memory is limited. We cannot adjust the amount of memory allocated for a static structure such as an array. This potentially creates a lot of wasted space.
 		\item Dynamic memory is complicated. There is a lot of opportunities to make mistakes.

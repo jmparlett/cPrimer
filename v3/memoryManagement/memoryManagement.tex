@@ -1,4 +1,4 @@
-\documentclass[14pt]{extreport}
+\documentclass{beamer}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 \usepackage{amsmath}
@@ -13,7 +13,8 @@
 \usepackage{algpseudocode}
 % \geometry{a4paper} % or letter or a5paper or ... etc
 % \geometry{landscape} % rotated page geometry
-\usepackage[margin=2cm]{geometry}
+% \usepackage[margin=2cm]{geometry}
+\usepackage{minted}
 \usepackage[most]{tcolorbox}
 \newtcolorbox{tb}[1][]{%
   sharp corners,
@@ -40,17 +41,31 @@
   upquote=true
 }
 
-% created 2022-May-30 %
-
-\title{memoryManagement}
+% created 2022-May-23 %
+% Theme choice:
+% \usetheme{AnnArbor}
+\usetheme{focus}
+% Title page details: 
+\title{Memory and Pointers in C}
 \author{Jonathan Parlett}
+\date{\today}
 
 \begin{document}
-\maketitle
 
-\section*{Question 1}
-\begin{enumerate}[a.]
-    \item
-\end{enumerate}
+% Title page frame
+\begin{frame}
+    \titlepage
+	{\bf Memory in C}
+\end{frame}
+
+\begin{frame}{fragile}{What were going to talk about}
+	\begin{itemize}[<+->]
+		\item Segmentation of memory. How computer memory is allocated by the operating system
+		\item What is a segmentation fault
+		\item The Stack and the Heap
+		\item Malloc, how we request memory from the operating system
+		\item Static vs Dynamic Memory, and why you would use one over the other
+	\end{itemize}
+\end{frame}
 
 \end{document}
